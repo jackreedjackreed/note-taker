@@ -10,20 +10,14 @@ var PORT = process.env.PORT || 3030
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
-var yoda = {
-    name: "Yoda",
-    role: "Jedi Master",
-    age: 900,
-    forcePoints: 2000
-  };
 
-app.get("/yoda", function(req, res) {
-    res.json(yoda);
-  });
+// HTML GET ROUTES
 
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "public/index.html"));
-});
+// path to file containing get routes to index.html and notes.html
+require("./routes/html-routes")(app);
+
+// path to file containing get routes to notes api
+require("./routes/api-routes")(app);
 
 
 // start the server
