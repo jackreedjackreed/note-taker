@@ -17,14 +17,14 @@ module.exports = function (app) {
 
     // API GET REQUEST
     app.get("/api/notes", function (request, response) {
-    fs.readFile(
-      db,
-      { encoding: "utf8", flag: "r" },
-      function (err, data) {
-        if (err) console.log(err);
-        else console.log(data);
-      }
-    );
+    // fs.readFile(
+    //   db,
+    //   { encoding: "utf8", flag: "r" },
+    //   function (err, data) {
+    //     if (err) console.log(err);
+    //     else console.log(data);
+    //   }
+    // );
     console.log("getting api/notes");
     response.json(db);
   });
