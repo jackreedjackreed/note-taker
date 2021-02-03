@@ -5,18 +5,10 @@ var path = require("path");
 var notes = require("../db/db.json");
 var { v4: uuidv4 } = require("uuid"); //Random id generator
 
-var yoda = {
-  name: "Yoda",
-  role: "Jedi Master",
-  age: 900,
-  forcePoints: 2000,
-};
-
-console.log(notes);
 
 module.exports = function (app) {
 
-    // API GET REQUEST
+  // API GET REQUEST
 
     app.get("/api/notes", function (request, response) {
       console.log("getting api/notes");
@@ -24,31 +16,27 @@ module.exports = function (app) {
 
   });
 
-    // API POST REQUEST
-  app.post("/api/notes", function (request, response) {
-    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
-    // It will do this by sending out the value "true" have a table
-    // req.body is available since we're using the body parsing middleware
-    console.log("post request made");
-    // get text of newNote and give it an id with uuid
-    var newNote = {...request.body, id: uuidv4() };         // code source @jongomezdev
-    // get notesArray from 
-    console.log("new note received")
-    console.log(newNote);
-    console.log(notes);
-    console.log("just logged notes")
-    notes.push(newNote);
-    console.log(notes)
-    console.log("yay new notes")
-    // use fs to read notes file and add in new note
-    fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(notes), (err)=>{
-        if (err) throw err;
-        console.log("boutta log this new good shit")
-        console.log(notes);
-        response.json(notes);
+  // API POST REQUEST
 
-    });
-});
+    app.post("/api/notes", function (request, response) {
+      // get text of newNote and give it an id with uuid
+      // req.body is available since we're using the body parsing middleware
+      var newNote = {...request.body, id: uuidv4() };         // code source @jongomezdev
+      // get notesArray from 
+      notes.push(newNote);
+      // use fs to read notes file and add in updated notes
+      fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(notes), (err)=>{
+      if (err) throw err;
+      response.json(notes);
+      });
+  });
+
+  // API DELETE REQUEST
+
+    app.delete("/api/notes", function (request, response) {
+
+    })
+
 };
 
 
