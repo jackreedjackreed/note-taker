@@ -42,10 +42,13 @@ module.exports = function (app) {
       console.log('filtering...');
       console.log(deleted);
       console.log(notes);
+      fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(notes), (err)=>{
+        if (err) throw err;
+        response.json(notes);
       // const listWithFalse = originalList.filter(x=>!x.condition)
       //a.splice(a.findIndex(e => e.name === "tc_001"),1)
-    })
-
+      });
+    });
 };
 
 
