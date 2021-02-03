@@ -35,14 +35,17 @@ module.exports = function (app) {
     // get notesArray from 
     console.log("new note received")
     console.log(newNote);
-    var notesArray = JSON.parse(notes);
-    console.log(notesArray + " just got that notes array for ya")
+    console.log(notes);
+    console.log("just logged notes")
+    notes.push(newNote);
+    console.log(notes)
+    console.log("yay new notes")
     // use fs to read notes file and add in new note
-    fs.readFile(notes, function (err) {
+    fs.readFile("../db/db", function (err) {
         if (err) throw err;
-        notesArray.push(newNote);
+        notes.push(newNote);
     });
-    fs.writeFile(path.join(__dirname, notes), JSON.stringify(notesArray), (err)=>{
+    fs.writeFile(path.join(__dirname, notes), JSON.stringify(notes), (err)=>{
         if (err) throw err;
         response.json(newNote);
     });
