@@ -9,6 +9,7 @@ var PORT = process.env.PORT || 3030
 // set up the express app
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+app.use(express.static('public'));
 
 
 // HTML GET ROUTES
