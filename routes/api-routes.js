@@ -41,13 +41,12 @@ module.exports = function (app) {
     console.log(notes)
     console.log("yay new notes")
     // use fs to read notes file and add in new note
-    fs.readFile("../db/db", function (err) {
+    fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(notes), (err)=>{
         if (err) throw err;
-        notes.push(newNote);
-    });
-    fs.writeFile(path.join(__dirname, notes), JSON.stringify(notes), (err)=>{
-        if (err) throw err;
-        response.json(newNote);
+        console.log("boutta log this new good shit")
+        console.log(notes);
+        response.json(notes);
+
     });
 });
 };
