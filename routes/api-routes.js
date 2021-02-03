@@ -1,8 +1,9 @@
-const { response } = require("express");
+
 // pull in data from db
 var fs = require("fs");
-var db = require("../db/db.json");
-const { v4: uuidv4 } = require("uuid");
+var path = require("path");
+var notes = require("../db/db.json");
+var { v4: uuidv4 } = require("uuid"); //Random id generator
 
 var yoda = {
   name: "Yoda",
@@ -11,22 +12,16 @@ var yoda = {
   forcePoints: 2000,
 };
 
-console.log(db);
+console.log(notes);
 
 module.exports = function (app) {
 
     // API GET REQUEST
+
     app.get("/api/notes", function (request, response) {
-    // fs.readFile(
-    //   db,
-    //   { encoding: "utf8", flag: "r" },
-    //   function (err, data) {
-    //     if (err) console.log(err);
-    //     else console.log(data);
-    //   }
-    // );
-    console.log("getting api/notes");
-    response.json(db);
+      console.log("getting api/notes");
+    response.json(notes);
+
   });
 
     // API POST REQUEST
@@ -34,15 +29,24 @@ module.exports = function (app) {
     // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
     // It will do this by sending out the value "true" have a table
     // req.body is available since we're using the body parsing middleware
-    fs.readFile(data, function (err, data) {
+    console.log("post request made");
+    // get text of newNote and give it an id with uuid
+    var newNote = {...request.body, id: uuidv4() };         // code source @jongomezdev
+    // get notesArray from 
+    console.log("new note received")
+    console.log(newNote);
+    var notesArray = JSON.parse(notes);
+    console.log(notesArray + " just got that notes array for ya")
+    // use fs to read notes file and add in new note
+    fs.readFile(notes, function (err) {
         if (err) throw err;
-        var notesArray = JSON.parse(data)
-        var newNote = {...request.body, id: uuid() };         // code source @jongomezdev
         notesArray.push(newNote);
-        fs.writeFileSync(db, JSON.stringify(notesArray));
+    });
+    fs.writeFile(path.join(__dirname, notes), JSON.stringify(notesArray), (err)=>{
+        if (err) throw err;
         response.json(newNote);
-    })
-  })
+    });
+});
 };
 
 
@@ -59,5 +63,3 @@ module.exports = function (app) {
 //   });
 
 // Reservation List
-
-// Waitlist
