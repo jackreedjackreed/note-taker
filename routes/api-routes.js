@@ -33,8 +33,17 @@ module.exports = function (app) {
 
   // API DELETE REQUEST
 
-    app.delete("/api/notes", function (request, response) {
-
+    app.delete("/api/notes/:id", function (request, response) {
+      console.log('starting delete');
+      console.log(notes);
+      var deleteID = request.params.id
+      console.log(deleteID);
+      var deleted = notes.splice(notes.findIndex(i => i.id === deleteID), 1);
+      console.log('filtering...');
+      console.log(deleted);
+      console.log(notes);
+      // const listWithFalse = originalList.filter(x=>!x.condition)
+      //a.splice(a.findIndex(e => e.name === "tc_001"),1)
     })
 
 };
