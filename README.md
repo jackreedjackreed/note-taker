@@ -40,7 +40,7 @@
 
  ## Demo 
 
-<img src="/public/assets/express-note-applicaiton.png" alt="screnshot of application">
+<img src="./public/assets/express-note-application.png" alt="screnshot of application">
 
   ## MIT License
 
