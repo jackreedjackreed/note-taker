@@ -11,7 +11,6 @@ module.exports = function (app) {
   // API GET REQUEST
 
     app.get("/api/notes", function (request, response) {
-      console.log("getting api/notes");
     response.json(notes);
 
   });
@@ -34,34 +33,14 @@ module.exports = function (app) {
   // API DELETE REQUEST
 
     app.delete("/api/notes/:id", function (request, response) {
-      console.log('starting delete');
-      console.log(notes);
+      console.log('starting delete...');
       var deleteID = request.params.id
-      console.log(deleteID);
       var deleted = notes.splice(notes.findIndex(i => i.id === deleteID), 1);
-      console.log('filtering...');
-      console.log(deleted);
-      console.log(notes);
+      console.log('deleting...');
       fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(notes), (err)=>{
         if (err) throw err;
+        console.log("successful deleted!")
         response.json(notes);
-      // const listWithFalse = originalList.filter(x=>!x.condition)
-      //a.splice(a.findIndex(e => e.name === "tc_001"),1)
       });
     });
 };
-
-
-  // ---------------------------------------------------------------------------
-  // I added this below code so you could clear out the table while working with the functionality.
-  // Don"t worry about it!
-
-//   app.post("/api/clear", function (req, res) {
-//     // Empty out the arrays of data
-//     tableData.length = 0;
-//     waitListData.length = 0;
-
-//     res.json({ ok: true });
-//   });
-
-// Reservation List
